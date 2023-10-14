@@ -33,11 +33,12 @@ class Srt {
   getConts(file) {
     let subtitles = this.fileToItems(file);
     let conts = subtitles.map((n) => {
-      return `{${n.id}|${n.content}}`;
+      // return `{${n.id}|${n.content}}`;
+      return `[${n.id}] ${n.content}`
     });
-    conts = conts.join('\n');
+    conts = conts.join('\n-------\n');
     console.log(conts);
-    fs.writeFileSync('../3_1.srt', conts);
+    fs.writeFileSync('../output.srt', conts);
     return conts;
   }
 
@@ -66,5 +67,5 @@ module.exports = Srt;
 
 // ---------
 let srt = new Srt();
-let codes = srt.translateFile('../srts/3.srt');
+let codes = srt.translateFile('../srts/4.srt');
 // console.log(codes);
