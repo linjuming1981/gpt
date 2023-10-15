@@ -30,16 +30,37 @@ class Srt {
     fs.writeFileSync('../3_output.srt', code);
   }
 
-  getConts(file) {
+  getDeeplEnConts(file) {
     let subtitles = this.fileToItems(file);
     let conts = subtitles.map((n) => {
-      // return `{${n.id}|${n.content}}`;
       return `[${n.id}] ${n.content}`
     });
     conts = conts.join('\n-------\n');
-    console.log(conts);
-    fs.writeFileSync('../output.srt', conts);
+    // fs.writeFileSync('../output.srt', conts);
     return conts;
+  }
+
+  deeplTranToSrt(deeplFile, orgSrtFile){
+    const code = fs.readFileSync(deeplFile, 'utf8');
+    let arr = code.split('-------').map(n => n.trim())
+    const map = {}
+    arr.forEach(n => {
+      let [,id, tran] = n.match(/^\[([\d]+)\] (.*)$/)
+      map[id] = tran
+    })
+    // console.log(map)
+
+    const subtitles = this.fileToItems(orgSrtFile)
+    subtitles.forEach(n => {
+      n.tranText = map[n.id]
+    })
+    console.log(subtitles)
+    arr = subtitles.map(n => {
+      return `${n.id}\n${n.time}\n${n.tranText}`
+    })
+    let srtCont = arr.join('\n\n')
+    console.log(srtCont)
+    fs.writeFileSync('../output_srt.srt', srtCont)
   }
 
   async translateFile(file) {
@@ -67,5 +88,7 @@ module.exports = Srt;
 
 // ---------
 let srt = new Srt();
-let codes = srt.translateFile('../srts/4.srt');
+// let codes = srt.translateFile('../srts/4.srt');
 // console.log(codes);
+
+srt.deeplTranToSrt('../output_cn.srt', '../srts/4.srt')
