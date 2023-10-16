@@ -92,3 +92,7 @@ let srt = new Srt();
 // console.log(codes);
 
 srt.deeplTranToSrt('../output_cn.srt', '../srts/4.srt')
+
+/*
+下面我将提供一段字幕文件中的代码，请帮我翻译成中文（序号和时间不要翻译，字幕内容行翻译），翻译后句子要通顺易懂
+ */
