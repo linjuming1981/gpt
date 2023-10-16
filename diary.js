@@ -9,3 +9,5 @@ https://www.zhihu.com/question/54520089
 电影排行榜思路：
   用接口获取循环获取每一天的数据
   
+字幕下载翻译：
+https://savesubs.com/
